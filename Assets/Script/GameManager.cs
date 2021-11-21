@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     private float timerToTurn;
     private float valueOfTimerToTurn;
 
-    void snake()
+    void snake_controller()
     {
         timerToTurn -= Time.deltaTime;
 
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        snake();
+        snake_controller();
     }
 
 
