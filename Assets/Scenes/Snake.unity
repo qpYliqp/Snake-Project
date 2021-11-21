@@ -232,10 +232,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 845247256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0275bf28eda2e744b8e984ae0b61265, type: 3}
+  m_Script: {fileID: 11500000, guid: 39daaf4eb0f7bdd4fb15baeb13453efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   snakeObject: {fileID: 1933360792}
+  timerToTurn: 0
 --- !u!4 &845247258
 Transform:
   m_ObjectHideFlags: 0
@@ -296,6 +297,5 @@ MonoBehaviour:
   x: 0
   y: 0
   speed: 3
-  dir: 
   snake: []
   snakePartPrefab: {fileID: 1660743461600679995, guid: 4904a7ae0aee6fd4aab304e280a87fa6, type: 3}
