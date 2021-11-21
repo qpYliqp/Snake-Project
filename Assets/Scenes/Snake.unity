@@ -237,6 +237,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snakeObject: {fileID: 1933360792}
   timerToTurn: 0
+  keyUp: 273
+  keyRight: 275
+  keyDown: 274
+  keyLeft: 276
 --- !u!4 &845247258
 Transform:
   m_ObjectHideFlags: 0
@@ -299,3 +303,6 @@ MonoBehaviour:
   speed: 3
   snake: []
   snakePartPrefab: {fileID: 1660743461600679995, guid: 4904a7ae0aee6fd4aab304e280a87fa6, type: 3}
+  snakeHeadPrefab: {fileID: 6162007904427248039, guid: 70fbb90a359bd8f42b3e9efd6f1463f5, type: 3}
+  snakeTailPrefab: {fileID: 6351824183193322302, guid: dad5f1c99236018499aaefad51af62a7, type: 3}
+  snakeTurnPrefab: {fileID: 6510185915329694397, guid: 2cd860a75209a47479278306e541b0fd, type: 3}
