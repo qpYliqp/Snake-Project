@@ -9,6 +9,13 @@ public class ScoreRythmeManager : MonoBehaviour
     public static ScoreRythmeManager instance;
 
 
+    [Header("Script")]
+    [SerializeField] private float f_totalNote;
+    public float f_neutral;
+    public float f_good;
+    public float f_great;
+    public float f_perfect;
+    public float f_miss;
 
     [Header("Score")]
     public int i_currentScore;
@@ -23,6 +30,8 @@ public class ScoreRythmeManager : MonoBehaviour
     [Header("Affichage")]
     public Text txt_CurrentScore;
     public Text txt_Multiplier;
+    public GameObject go_EndScreen;
+    public Text txt_score, txt_neutral, txt_good, txt_great, txt_perfect, txt_miss, txt_rank, txt_percent;
 
     void Affichage()
     {
@@ -34,6 +43,8 @@ public class ScoreRythmeManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        go_EndScreen.SetActive(false);
+        f_totalNote = 17;
     }
 
     void Start()
@@ -78,19 +89,23 @@ public class ScoreRythmeManager : MonoBehaviour
         if (note == "neutral")
         {
             i_currentScore += i_neutralNote * i_currentMultiplier;
+            f_neutral++; f_totalNote--;
 
         }
         else if (note == "good")
         {
             i_currentScore += i_goodNote * i_currentMultiplier;
+            f_good++; f_totalNote--;
         }
         else if (note == "great")
         {
             i_currentScore += i_greatNote * i_currentMultiplier;
+            f_great++; f_totalNote--;
         }
         else if(note == "perfect")
         {
             i_currentScore += i_perfectNote * i_currentMultiplier;
+            f_perfect++; f_totalNote--;
         }
     }
 
@@ -99,6 +114,8 @@ public class ScoreRythmeManager : MonoBehaviour
         //Remise à zéro des coefficients
         i_currentMultiplier = 1;
         i_MultiplierTracker = 0;
+        f_miss++; f_totalNote--;
+        Debug.Log("miss");
         Affichage();
        
     }
@@ -110,5 +127,16 @@ public class ScoreRythmeManager : MonoBehaviour
     void Update()
     {
         Affichage();
+
+        if(f_totalNote <= 0)
+        {
+            SoundManager.instance.StopAMusic("redbone");
+            txt_score.text = i_currentScore.ToString(); txt_neutral.text = f_neutral.ToString(); txt_good.text = f_good.ToString(); txt_great.text = f_great.ToString(); 
+            txt_perfect.text = f_perfect.ToString(); txt_miss.text = f_miss.ToString();
+            float test = (17 - f_miss) * 100 / 17;
+            txt_percent.text = test.ToString(); 
+            go_EndScreen.SetActive(true);
+
+        }
     }
 }

@@ -237,10 +237,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snakeObject: {fileID: 1933360792}
   timerToTurn: 0
-  keyUp: 273
-  keyRight: 275
-  keyDown: 274
-  keyLeft: 276
+  keyUp: 332
+  keyRight: 333
+  keyDown: 331
+  keyLeft: 330
 --- !u!4 &845247258
 Transform:
   m_ObjectHideFlags: 0

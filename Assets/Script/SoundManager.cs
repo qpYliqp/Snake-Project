@@ -48,5 +48,24 @@ public class SoundManager : MonoBehaviour
        
     }
 
+    public void StopAMusic(string name)
+    {
+        foreach (Sound sound in au_ListSounds)
+        {
+            if (sound.str_name == name)
+            {
+
+                Debug.Log("trouvé");
+                sound.au_source.Stop();
+
+
+            }
+            else
+            {
+                Debug.Log("didnt find your shit");
+            }
+        }
+    }
+
   
 }
