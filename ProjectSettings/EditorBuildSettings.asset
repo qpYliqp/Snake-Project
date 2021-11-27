@@ -6,7 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/StartScene/StartScene.unity
+    guid: 02afc4945ac5ddd44a0c7837b29d8f47
+  - enabled: 1
+    path: Assets/Snake/Snake.unity
+    guid: 00294f5155fee144caa7436723510a86
+  - enabled: 1
+    path: Assets/Rythm/Rythm.unity
+    guid: a7efac3f0da73e7439004acd29203987
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5e3d5611c0bb12a4db098621a0355ca3, type: 2}

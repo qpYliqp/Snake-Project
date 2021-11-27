@@ -8,7 +8,15 @@ public class StartScene : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private static StartScene instance;
+    private static StartScene instance = null;
+
+    public static StartScene Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
 
     [Header("Canva")]
     [SerializeField] private GameObject go_ScreenPlay;
@@ -52,10 +60,22 @@ public class StartScene : MonoBehaviour
         }
     }
 
+    public void Rythm()
+    {
+        Scenes.Instance.Load(2);
+    }
+
+    public void Snake()
+    {
+        Scenes.Instance.Load(1);
+    }
+
     public void Play()
     {
-        Debug.Log("la fonction ptn");
+
         i_ScreenIndex = 2;
+
+        StartCoroutine("FixTheBug");
 
     }
 
@@ -66,18 +86,25 @@ public class StartScene : MonoBehaviour
     void Start()
     {
         btn_Play.Select();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         ScreenDisplay();
-
-        if(Input.GetKey(KeyCode.A) && i_ScreenIndex == 1)
-        {
-            Play();
-        }
         
+
+    }
+
+
+    IEnumerator FixTheBug()
+    {
+
+    //Corection du bug d'affichage de la sélection des bouttons.
+
+        yield return new WaitForSeconds(0.1f);
+        btn_Rythm.Select();
 
     }
 

@@ -185,7 +185,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 54360251}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 781871514}
+        m_TargetAssemblyTypeName: StartScene, Assembly-CSharp
+        m_MethodName: Rythm
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &54360251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,12 +492,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502540325}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 305.8189, y: 170.29408, z: -221.5895}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1645370480}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &502540327
 MonoBehaviour:
@@ -499,7 +511,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8257e20907d680c4a99e1753576e62cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  au_ListSounds: []
+  au_ListSounds:
+  - au_clip: {fileID: 8300000, guid: ca8e0ec8bca204c4589fdc6f7c56ce66, type: 3}
+    str_name: redbone
+    f_volume: 1
+    f_pitch: 1
+    au_source: {fileID: 0}
 --- !u!1 &560658011
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +637,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 560658013}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 781871514}
+        m_TargetAssemblyTypeName: StartScene, Assembly-CSharp
+        m_MethodName: Snake
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &781871513
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +687,7 @@ MonoBehaviour:
   btn_Play: {fileID: 1257516218}
   btn_Snake: {fileID: 560658015}
   btn_Rythm: {fileID: 54360250}
+  go_Snake: {fileID: 560658011}
   b_Snake: 0
   b_Rythm: 0
 --- !u!114 &781871515
@@ -678,7 +708,7 @@ MonoBehaviour:
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_ForceModuleActive: 1
 --- !u!114 &781871516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1257516217}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &781871517
@@ -899,7 +929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -940,6 +970,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: stp fonctionne
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 560658015}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1257516219
@@ -1028,6 +1070,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1325095400}
+  - component: {fileID: 1325095401}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -1042,13 +1085,25 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325095399}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 305.8189, y: 170.29408, z: -221.5895}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1645370480}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1325095401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325095399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23cb360a2f3fc347915a5bf56910b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1406352922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,38 +1183,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406352922}
   m_CullTransparentMesh: 1
---- !u!1 &1645370479
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1645370480}
-  m_Layer: 0
-  m_Name: Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1645370480
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1645370479}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 305.8189, y: 170.29408, z: -221.5895}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 502540326}
-  - {fileID: 1325095400}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1797614558
 GameObject:
   m_ObjectHideFlags: 0
