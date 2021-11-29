@@ -30,21 +30,79 @@ public class ScoreRythmeManager : MonoBehaviour
     [Header("Affichage")]
     public Text txt_CurrentScore;
     public Text txt_Multiplier;
+    public GameObject go_StartScreen; 
     public GameObject go_EndScreen;
-    public Text txt_score, txt_neutral, txt_good, txt_great, txt_perfect, txt_miss, txt_rank, txt_percent;
+    public GameObject go_Compteur;
+    public Button btn_Musique1;
+    public Button btn_Musique2;
+    public Button btn_Musique3;
+    [SerializeField] private int i_compteur;
+    public Text txt_score, txt_neutral, txt_good, txt_great, txt_perfect, txt_miss, txt_rank, txt_percent, txt_Compteur;
+
+    [Header("Scroller")]
+    [SerializeField] private Scroller Beat1;
+    [SerializeField] private Scroller Beat2;
+    [SerializeField] private Scroller Beat3;
+    [SerializeField] private GameObject go_Beat1;
+    [SerializeField] private GameObject go_Beat2;
+
+    [Header("Variable")]
+    public bool startPlaying;
+    public float f_tempo;
+    [SerializeField] private string music;
+
+
 
     void Affichage()
     {
         //Affichage du score en fonction des variables
         txt_CurrentScore.text = i_currentScore.ToString();
         txt_Multiplier.text = "X" + i_currentMultiplier.ToString();
+        txt_Compteur.text = i_compteur.ToString();
+
+        if (f_totalNote <= 0)
+        {
+            SoundManager.instance.StopAMusic(music);
+            txt_score.text = i_currentScore.ToString(); txt_neutral.text = f_neutral.ToString(); txt_good.text = f_good.ToString(); txt_great.text = f_great.ToString();
+            txt_perfect.text = f_perfect.ToString(); txt_miss.text = f_miss.ToString();
+            float test = (f_totalNote - f_miss) * 100 / f_totalNote;
+            txt_percent.text = test.ToString();
+            go_EndScreen.SetActive(true);
+        }
+    }
+
+    public void Musique1()
+    {
+        f_totalNote = 17;
+        f_tempo = 155;
+        music = "redbone";
+
+    }
+
+    public void Musiqu2()
+    {
+        f_totalNote = 17;
+        f_tempo = 124;
+        music = "harvey";
+    }
+
+    public void Musique3()
+    {
+
+    }
+
+    void LaunchMusic(Scroller beat)
+    {
+        beat.hasStarted = true;
     }
 
     private void Awake()
     {
         instance = this;
+        go_StartScreen.SetActive(true);
         go_EndScreen.SetActive(false);
-        f_totalNote = 17;
+        i_compteur = 5;
+        
     }
 
     void Start()
@@ -120,23 +178,21 @@ public class ScoreRythmeManager : MonoBehaviour
        
     }
 
-    // Start is called before the first frame update
 
-
-    // Update is called once per frame
     void Update()
     {
         Affichage();
 
-        if(f_totalNote <= 0)
-        {
-            SoundManager.instance.StopAMusic("redbone");
-            txt_score.text = i_currentScore.ToString(); txt_neutral.text = f_neutral.ToString(); txt_good.text = f_good.ToString(); txt_great.text = f_great.ToString(); 
-            txt_perfect.text = f_perfect.ToString(); txt_miss.text = f_miss.ToString();
-            float test = (17 - f_miss) * 100 / 17;
-            txt_percent.text = test.ToString(); 
-            go_EndScreen.SetActive(true);
+        
+    }
 
+    IEnumerator WaitForLaunch()
+    {
+        go_Compteur.SetActive(true);
+        while (i_compteur >= 0)
+        {
+            yield return new WaitForSeconds(1f);
+            i_compteur--;
         }
     }
 }

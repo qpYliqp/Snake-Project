@@ -22,25 +22,25 @@ public class Note : MonoBehaviour
 
                 if (Mathf.Abs(transform.position.y)>0.35)
                 {
-                    ScoreRythmeManager.instance.NoteHit("neutral");
+                    RythmManager.instance.NoteHit("neutral");
                     Debug.Log("neutre");
                 }
                 else if(Mathf.Abs(transform.position.y)>0.25)
                 {
-                    ScoreRythmeManager.instance.NoteHit("good");
+                    RythmManager.instance.NoteHit("good");
                     Debug.Log("good");
 
                 }
                 else if(Mathf.Abs(transform.position.y)>0.15)
                 {
-                    ScoreRythmeManager.instance.NoteHit("great");
+                    RythmManager.instance.NoteHit("great");
                     Debug.Log("great");
 
 
                 }
                 else
                 {
-                    ScoreRythmeManager.instance.NoteHit("perfect");
+                    RythmManager.instance.NoteHit("perfect");
                     Debug.Log("perfect");
 
                 }
@@ -65,7 +65,7 @@ public class Note : MonoBehaviour
             gameObject.SetActive(false);
             Destroy(this);
             Destroy(gameObject);
-            ScoreRythmeManager.instance.NoteMissed();
+            RythmManager.instance.NoteMissed();
 
         }
     }
