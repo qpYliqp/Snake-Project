@@ -49,6 +49,7 @@ public class ScoreRythmeManager : MonoBehaviour
     [Header("Variable")]
     public bool startPlaying;
     public float f_tempo;
+    public bool b_canbeStopped;
     [SerializeField] private string music;
 
 
@@ -131,7 +132,10 @@ public class ScoreRythmeManager : MonoBehaviour
     public void NoteHit(string note)
     {
 
-
+        if (!b_canbeStopped)
+        {
+            b_canbeStopped = true;
+        }
         
             //conditionnel pour savoir si on pour passer à un coefficient supérieur dans le calcul des scores
             if (i_currentMultiplier - 1 < i_IndexTracker.Length)

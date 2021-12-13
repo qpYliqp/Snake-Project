@@ -39,6 +39,8 @@ public class RythmManager : MonoBehaviour
     public Button btn_Musique1;
     public Button btn_Musique2;
     public Button btn_Musique3;
+    public Button btn_Retry;
+    public Button btn_Menu;
     [SerializeField] private int i_compteur;
     public Text txt_score, txt_neutral, txt_good, txt_great, txt_perfect, txt_miss, txt_rank, txt_percent, txt_compteur;
 
@@ -51,6 +53,7 @@ public class RythmManager : MonoBehaviour
     [Header("Variable")]
     public bool startPlaying;
     public float f_tempo;
+    [SerializeField] private bool b_canbeStopped;
     public int i_music; // To know which music is selected
     [SerializeField] private string str_music;
 
@@ -64,8 +67,8 @@ public class RythmManager : MonoBehaviour
         txt_compteur.text = i_compteur.ToString();
 
 
-
-        if (f_totalNote <= 0)
+        
+        if (f_totalNote <= 0 && b_canbeStopped)
         {
             SoundManager.instance.StopAMusic(str_music);
             txt_score.text = i_currentScore.ToString(); txt_neutral.text = f_neutral.ToString(); txt_good.text = f_good.ToString(); txt_great.text = f_great.ToString();
@@ -73,6 +76,8 @@ public class RythmManager : MonoBehaviour
             float test = (f_totalNote - f_miss) * 100 /f_totalNote;
             txt_percent.text = test.ToString();
             go_EndScreen.SetActive(true);
+            btn_Retry.Select();
+
 
         }
 
@@ -168,7 +173,10 @@ public class RythmManager : MonoBehaviour
     //calcul des notes
     public void NoteHit(string note)
     {
-
+        if(b_canbeStopped == false)
+        {
+            b_canbeStopped = true;
+        }
 
 
         //conditionnel pour savoir si on pour passer à un coefficient supérieur dans le calcul des scores
