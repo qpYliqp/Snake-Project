@@ -1,177 +1,141 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class SnakeControler : MonoBehaviour
 {
-    [SerializeField]
-    private float x;
-    [SerializeField]
-    private float y;
+    private List<Transform> AllParts = new List<Transform>();
+    public Transform HeadPrefab;
+    public Transform BodyPrefab;
+    public Transform TailPrefab;
+    public Vector2 direction = Vector2.right;
+    public int initialSize = 20;
 
-    [SerializeField]
-    private int speed;
+    public GameObject parentOfPart;
 
+    public KeyCode keyUp;
+    public KeyCode keyRight;
+    public KeyCode keyDown;
+    public KeyCode keyLeft;
 
-    [SerializeField]
-    private List<GameObject> snake;
+    public KeyCode keyUpArrow;
+    public KeyCode keyRightArrow;
+    public KeyCode keyDownArrow;
+    public KeyCode keyLeftArrow;
 
-    public GameObject snakePartPrefab;
-    public GameObject snakeHeadPrefab;
-    public GameObject snakeTailPrefab;
-    public GameObject snakeTurnPrefab;
+    public float speed = 10.0f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        GameObject snakeHead = Instantiate(snakeHeadPrefab, new Vector2(x, y), Quaternion.identity);
-        snakeHead.name = "Head";
-        snakeHead.transform.parent = gameObject.transform;
-        snakeHead.GetComponent<PartControler>().SetVariables(directions.right, x, y);
-        snakeHead.GetComponent<PartControler>().SetSpeed(speed);
-
-        snake = new List<GameObject>();
-        snake.Add(snakeHead);
+        ResetState();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        x = snake[snake.Count - 1].GetComponent<PartControler>().GetX();
-        y = snake[snake.Count - 1].GetComponent<PartControler>().GetY();
-        switch (snake[snake.Count - 1].GetComponent<PartControler>().GetDirection())
+        // Only allow turning up or down while moving in the x-axis
+        if (this.direction.x != 0f)
         {
-            case directions.up:
-                y -= 1.28f;
-                break;
-            case directions.right:
-                x -= 1.28f;
-                break;
-            case directions.down:
-                y += 1.28f;
-                break;
-            case directions.left:
-                x += 1.28f;
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void setDirection(directions _newDir)
-    {
-        if (snake[0].GetComponent<PartControler>().GetDirection() - 2 != _newDir && snake[0].GetComponent<PartControler>().GetDirection() + 2 != _newDir)
-        {
-            snake[0].GetComponent<PartControler>().SetDirection(_newDir);
-            switch(_newDir)
+            if (Input.GetKeyDown(keyUp) || Input.GetKeyDown(keyUpArrow))
             {
-                case directions.up:
-                    snake[0].transform.rotation = Quaternion.Euler(0, 0, 0);
-                    break;
-                case directions.down:
-                    snake[0].transform.rotation = Quaternion.Euler(0, 0, 180);
-                    break;
-                case directions.left:
-                    snake[0].transform.rotation = Quaternion.Euler(0, 0, 90);
-                    break;
-                case directions.right:
-                    snake[0].transform.rotation = Quaternion.Euler(0, 0, 270);
-                    break;
+                this.direction = Vector2.up;
             }
-            StartCoroutine(WaitAndTurn());
-        }
-    }
-
-    public void addPart()
-    {
-        
-        GameObject snakeHead = Instantiate(snakePartPrefab, new Vector2(x, y), Quaternion.identity);
-        snakeHead.name = "BodyPart";
-        snakeHead.transform.parent = gameObject.transform;
-        snakeHead.GetComponent<PartControler>().SetVariables(snake[snake.Count - 1].GetComponent<PartControler>().GetDirection(), (float)x, (float)y);
-        snakeHead.GetComponent<PartControler>().SetSpeed(speed);
-        switch (snake[snake.Count - 1].GetComponent<PartControler>().GetDirection())
-        {
-            case directions.up:
-                snakeHead.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case directions.down:
-                snakeHead.transform.rotation = Quaternion.Euler(0, 0, 180);
-                break;
-            case directions.left:
-                snakeHead.transform.rotation = Quaternion.Euler(0, 0, 90);
-                break;
-            case directions.right:
-                snakeHead.transform.rotation = Quaternion.Euler(0, 0, 270);
-                break;
-        }
-        snake.Add(snakeHead);
-    }
-
-    private IEnumerator WaitAndTurn()
-    {
-        GameObject snakeTurn = Instantiate(snakeTurnPrefab, new Vector2(0, 0), Quaternion.identity);
-        snakeTurn.name = "Turn";
-        snakeTurn.transform.parent = gameObject.transform;
-        switch (snake[0].GetComponent<PartControler>().GetDirection())
-        {
-            case directions.up:
-                snakeTurn.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case directions.down:
-                snakeTurn.transform.rotation = Quaternion.Euler(0, 0, 180);
-                break;
-            case directions.left:
-                snakeTurn.transform.rotation = Quaternion.Euler(0, 0, 90);
-                break;
-            case directions.right:
-                snakeTurn.transform.rotation = Quaternion.Euler(0, 0, 270);
-                break;
-        }
-        snakeTurn.GetComponent<PartControler>().SetVariables(directions.up, snake[0].GetComponent<PartControler>().GetX(), snake[0].GetComponent<PartControler>().GetY());
-        snakeTurn.GetComponent<PartControler>().SetSpeed(0);
-
-        int i = 1;
-        while (i < snake.Count)
-        {
-            yield return new WaitForSeconds(1.28f / (float)speed);
-            directions dirPrec = snake[i - 1].GetComponent<PartControler>().GetDirection();
-            snake[i].GetComponent<PartControler>().SetDirection(dirPrec);
-            switch (dirPrec)
+            else if (Input.GetKeyDown(keyDown) || Input.GetKeyDown(keyDownArrow))
             {
-                case directions.up:
-                    snake[i].GetComponent<PartControler>().SetX(snake[i - 1].GetComponent<PartControler>().GetX());
-                    snake[i].transform.rotation = Quaternion.Euler(0, 0, 0);
-                    break;
-                case directions.down:
-                    snake[i].GetComponent<PartControler>().SetX(snake[i - 1].GetComponent<PartControler>().GetX());
-                    snake[i].transform.rotation = Quaternion.Euler(0, 0, 180);
-                    break;
-                case directions.left:
-                    snake[i].GetComponent<PartControler>().SetY(snake[i - 1].GetComponent<PartControler>().GetY());
-                    snake[i].transform.rotation = Quaternion.Euler(0, 0, 90);
-                    break;
-                case directions.right:
-                    snake[i].GetComponent<PartControler>().SetY(snake[i - 1].GetComponent<PartControler>().GetY());
-                    snake[i].transform.rotation = Quaternion.Euler(0, 0, 270);
-                    break;
+                this.direction = Vector2.down;
             }
-            i += 1;
+        }
+        // Only allow turning left or right while moving in the y-axis
+        else if (this.direction.y != 0f)
+        {
+            if (Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyRightArrow))
+            {
+                this.direction = Vector2.right;
+            }
+            else if (Input.GetKeyDown(keyLeft) || Input.GetKeyDown(keyLeftArrow))
+            {
+                this.direction = Vector2.left;
+            }
         }
 
-        Destroy(snakeTurn);
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Grow();
+        }
     }
 
-    public int GetSpeed()
+    private void FixedUpdate()
     {
-        return speed;
-    }
-}
+        // Set each segment's position to be the same as the one it follows. We
+        // must do this in reverse order so the position is set to the previous
+        // position, otherwise they will all be stacked on top of each other.
+        for (int i = AllParts.Count - 1; i > 0; i--)
+        {
+            /*
+            Vector2 position = AllParts[i - 1].position;
+            if (AllParts[i - 1].rotation.z == 0)
+                position.y -= this.BodyPrefab.gameObject.GetComponent<BoxCollider2D>().size.y;
+            if (AllParts[i - 1].rotation.z == 90)
+                position.x += this.BodyPrefab.gameObject.GetComponent<BoxCollider2D>().size.x;
+            if (AllParts[i - 1].rotation.z == 180)
+                position.y += this.BodyPrefab.gameObject.GetComponent<BoxCollider2D>().size.y;
+            if (AllParts[i - 1].rotation.z == 270)
+                position.x -= this.BodyPrefab.gameObject.GetComponent<BoxCollider2D>().size.x;
+            */
+            
+            AllParts[i].position = AllParts[i - 1].position + new Vector3(10, 0, 0);
+        }
 
-public enum directions
-{
-    up,
-    right,
-    down,
-    left
+        // Move the snake in the direction it is facing
+        // Round the values to ensure it aligns to the grid
+        // float x = Mathf.Round(this.transform.position.x) + this.direction.x / 100.0f * speed;
+        // float y = Mathf.Round(this.transform.position.y) + this.direction.y / 100.0f * speed;
+        float x = this.transform.position.x + this.direction.x / 100.0f * speed;
+        float y = this.transform.position.y + this.direction.y / 100.0f * speed;
+
+        this.transform.position = new Vector2(x, y);
+    }
+
+    public void Grow()
+    {
+        Transform segment = Instantiate(this.BodyPrefab);
+        segment.position = AllParts[AllParts.Count - 1].position;
+        segment.parent = parentOfPart.transform;
+
+        AllParts.Add(segment);
+    }
+
+    public void ResetState()
+    {
+        this.direction = Vector2.right;
+        this.transform.position = Vector3.zero;
+
+        // Start at 1 to skip destroying the head
+        for (int i = 1; i < AllParts.Count; i++)
+        {
+            Destroy(AllParts[i].gameObject);
+        }
+
+        // Clear the list but add back this as the head
+        AllParts.Clear();
+        AllParts.Add(this.transform);
+
+        // -1 since the head is already in the list
+        for (int i = 0; i < this.initialSize - 1; i++)
+        {
+            Grow();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Food")
+        {
+            Grow();
+        }
+        else if (other.tag == "Obstacle")
+        {
+            ResetState();
+        }
+    }
+
 }
