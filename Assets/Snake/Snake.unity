@@ -893,7 +893,7 @@ Transform:
   m_GameObject: {fileID: 1933360792}
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.03}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -926,6 +926,8 @@ MonoBehaviour:
   keyLeftArrow: 276
   speed: 3
   sizeOfParts: 0.256
+  timerBeforeTurn: 0
+  SnakeManager: {fileID: 845247256}
 --- !u!50 &1933360795
 Rigidbody2D:
   serializedVersion: 4
