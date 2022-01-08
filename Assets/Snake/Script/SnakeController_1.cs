@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class SnakeControler : MonoBehaviour
+public class SnakeController_1 : MonoBehaviour
 {
     private List<Transform> AllParts = new List<Transform>();
     public Transform HeadPrefab;
@@ -67,7 +67,7 @@ public class SnakeControler : MonoBehaviour
             Grow();
         }
 
-        
+
     }
 
     private void FixedUpdate()
@@ -84,12 +84,12 @@ public class SnakeControler : MonoBehaviour
         // Round the values to ensure it aligns to the grid
         // float x = Mathf.Round(this.transform.position.x) + this.direction.x / 100.0f * speed;
         // float y = Mathf.Round(this.transform.position.y) + this.direction.y / 100.0f * speed;
-        float x = this.transform.position.x + this.direction.x / 100.0f * speed;
-        float y = this.transform.position.y + this.direction.y / 100.0f * speed;
-        //X = X + this.direction.x / 100.0f * speed;
-        //Y = Y + this.direction.y / 100.0f * speed;
+        //float x = this.transform.position.x + this.direction.x / 100.0f * speed;
+        //float y = this.transform.position.y + this.direction.y / 100.0f * speed;
+        X = X + this.direction.x / 100.0f * speed;
+        Y = Y + this.direction.y / 100.0f * speed;
 
-        this.transform.position = new Vector2(x, y);
+        this.transform.position = new Vector2(Mathf.Round(X), Mathf.Round(Y));
     }
 
     public void Grow()
