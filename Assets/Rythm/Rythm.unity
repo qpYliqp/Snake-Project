@@ -429,7 +429,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TEST
+  m_Text: MENU
 --- !u!222 &52463569
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13129,7 +13129,7 @@ GameObject:
   - component: {fileID: 1068911987}
   - component: {fileID: 1068911986}
   m_Layer: 5
-  m_Name: retry (1)
+  m_Name: go to menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
