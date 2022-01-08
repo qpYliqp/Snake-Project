@@ -12,7 +12,7 @@ public class RythmManager : MonoBehaviour
 
 
     [Header("Script")]
-    [SerializeField] private float f_totalNote;
+    [SerializeField] private float f_totalNote = 1;
     public float f_neutral;
     public float f_good;
     public float f_great;
@@ -49,11 +49,12 @@ public class RythmManager : MonoBehaviour
     [SerializeField] private Scroller Beat2;
     [SerializeField] private GameObject go_Beat1;
     [SerializeField] private GameObject go_Beat2;
+    private Scroller current_beat;
 
     [Header("Variable")]
     public bool startPlaying;
     public float f_tempo;
-    [SerializeField] private bool b_canbeStopped;
+    public bool b_end = false;
     public int i_music; // To know which music is selected
     [SerializeField] private string str_music;
     private bool selection = false;
@@ -69,9 +70,10 @@ public class RythmManager : MonoBehaviour
 
 
         
-        if (f_totalNote <= 0 && b_canbeStopped)
+        if (f_totalNote <= 0)
         {
             SoundManager.instance.StopAMusic(str_music);
+            current_beat.hasStarted = false;
             txt_score.text = i_currentScore.ToString(); txt_neutral.text = f_neutral.ToString(); txt_good.text = f_good.ToString(); txt_great.text = f_great.ToString();
             txt_perfect.text = f_perfect.ToString(); txt_miss.text = f_miss.ToString();
             float test = (f_totalNote - f_miss) * 100 /f_totalNote;
@@ -82,6 +84,7 @@ public class RythmManager : MonoBehaviour
                 btn_Retry.Select();
                 selection = true;
             }
+            f_totalNote = 60;
 
         }
 
@@ -89,8 +92,8 @@ public class RythmManager : MonoBehaviour
         {
             switch (i_music) { 
                 default: break;
-                case 1: LaunchMusic(Beat1, go_Beat1); break;
-                case 2: LaunchMusic(Beat2, go_Beat2); break;
+                case 1: LaunchMusic(Beat1, go_Beat1); f_totalNote = 17;f_tempo = 160 / 60;  break;
+                case 2: LaunchMusic(Beat2, go_Beat2); f_totalNote = 17; f_tempo = 124 / 60; break;
 
             }
             
@@ -101,20 +104,18 @@ public class RythmManager : MonoBehaviour
     /// </début>
     public void Musique1()
     {
-        f_totalNote = 17;
-        f_tempo = 160 / 60;
-        str_music = "redbone";
+
         StartCoroutine("WaitForLaunch");
+        str_music = "redbone";
         i_music = 1;
 
     }
 
     public void Musiqu2()
     {
-        f_totalNote = 17;
-        f_tempo = 124 / 60;
-        str_music = "harvey";
         StartCoroutine("WaitForLaunch");
+        str_music = "harvey";
+      
         i_music = 2;
 
     }
@@ -123,15 +124,28 @@ public class RythmManager : MonoBehaviour
     {
 
     }
+    public void wait()
+    {
+        StartCoroutine("WaitForLaunch");
+
+    }
 
     public void Retry()
+    {   b_end = true;
+        go_EndScreen.SetActive(false);
+        current_beat.Rewind();
+
+
+    }
+
+    private void Menu()
     {
 
     }
 
-    public void Menu()
+    private void ResetRythm()
     {
-
+        i_compteur = 5;
     }
     /// </Liste de fonctions appelée quand on clique sur un boutton>
     /// 
@@ -144,7 +158,8 @@ public class RythmManager : MonoBehaviour
         i_compteur = 5;
         go_beat.SetActive(true);
         go_PlayingScreen.SetActive(true);
-        beat.hasStarted = true;
+        current_beat = beat;
+        current_beat.hasStarted = true;
         SoundManager.instance.PlayAMusic(str_music);
 
     }
@@ -158,6 +173,7 @@ public class RythmManager : MonoBehaviour
         go_Compteur.SetActive(false);
         go_Beat1.SetActive(false);
         go_Beat2.SetActive(false);
+        f_totalNote = 1;
         i_compteur = 5;
      }
 
@@ -187,54 +203,56 @@ public class RythmManager : MonoBehaviour
     //calcul des notes
     public void NoteHit(string note)
     {
-        if(b_canbeStopped == false)
+
+        if (!b_end)
         {
-            b_canbeStopped = true;
-        }
 
-
-        //conditionnel pour savoir si on pour passer à un coefficient supérieur dans le calcul des scores
-        if (i_currentMultiplier - 1 < i_IndexTracker.Length)
-        {
-            i_MultiplierTracker++;
-
-            if (i_IndexTracker[i_currentMultiplier - 1] <= i_MultiplierTracker)
+            //conditionnel pour savoir si on pour passer à un coefficient supérieur dans le calcul des scores
+            if (i_currentMultiplier - 1 < i_IndexTracker.Length)
             {
-                i_MultiplierTracker = 0;
-                i_currentMultiplier += 1;
-            }
-        }
-        if (note == "neutral")
-        {
-            i_currentScore += i_neutralNote * i_currentMultiplier;
-            f_neutral++; f_totalNote--;
+                i_MultiplierTracker++;
 
-        }
-        else if (note == "good")
-        {
-            i_currentScore += i_goodNote * i_currentMultiplier;
-            f_good++; f_totalNote--;
-        }
-        else if (note == "great")
-        {
-            i_currentScore += i_greatNote * i_currentMultiplier;
-            f_great++; f_totalNote--;
-        }
-        else if (note == "perfect")
-        {
-            i_currentScore += i_perfectNote * i_currentMultiplier;
-            f_perfect++; f_totalNote--;
+                if (i_IndexTracker[i_currentMultiplier - 1] <= i_MultiplierTracker)
+                {
+                    i_MultiplierTracker = 0;
+                    i_currentMultiplier += 1;
+                }
+            }
+            if (note == "neutral")
+            {
+                i_currentScore += i_neutralNote * i_currentMultiplier;
+                f_neutral++; f_totalNote--;
+
+            }
+            else if (note == "good")
+            {
+                i_currentScore += i_goodNote * i_currentMultiplier;
+                f_good++; f_totalNote--;
+            }
+            else if (note == "great")
+            {
+                i_currentScore += i_greatNote * i_currentMultiplier;
+                f_great++; f_totalNote--;
+            }
+            else if (note == "perfect")
+            {
+                i_currentScore += i_perfectNote * i_currentMultiplier;
+                f_perfect++; f_totalNote--;
+            }
         }
     }
 
     public void NoteMissed()
     {
-        //Remise à zéro des coefficients
-        i_currentMultiplier = 1;
-        i_MultiplierTracker = 0;
-        f_miss++; f_totalNote--;
-        Debug.Log("miss");
-        Affichage();
+        if (!b_end)
+        {
+            //Remise à zéro des coefficients
+            i_currentMultiplier = 1;
+            i_MultiplierTracker = 0;
+            f_miss++; f_totalNote--;
+            Debug.Log("miss");
+            Affichage();
+        }
 
     }
 

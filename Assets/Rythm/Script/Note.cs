@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[System.Serializable]
 public class Note : MonoBehaviour
 {
     public bool canBePressed;
+    public bool b_end;
     public KeyCode keyToPress;
     void Start()
     {
@@ -45,7 +46,7 @@ public class Note : MonoBehaviour
 
                 }
                 //Destroy(this);
-                Destroy(gameObject);
+                //gameObject.SetActive(false);
             }
 
         }
@@ -53,21 +54,31 @@ public class Note : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Activator")
+        if (!b_end)
         {
-            canBePressed = true;
-        }
+            if (collision.tag == "Activator")
+            {
+                canBePressed = true;
+            }
 
-        if (collision.tag == "Missed")
-        {
-            //Il y a un trigger " Missed " juste en dessous du Trigger " Activator " qui siginifie qu'il est trop tard pour avoir des points
-            canBePressed = false;
-            gameObject.SetActive(false);
-            Destroy(this);
-            Destroy(gameObject);
-            RythmManager.instance.NoteMissed();
+            if (collision.tag == "Missed")
+            {
+                //Il y a un trigger " Missed " juste en dessous du Trigger " Activator " qui siginifie qu'il est trop tard pour avoir des points
+                canBePressed = false;
+                gameObject.SetActive(false);
+                //Destroy(this);
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
+                RythmManager.instance.NoteMissed();
 
+            }
         }
+    }
+
+    public void SetVisible()
+    {
+
+        gameObject.SetActive(true);
     }
 
 
