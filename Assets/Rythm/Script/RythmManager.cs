@@ -56,6 +56,7 @@ public class RythmManager : MonoBehaviour
     [SerializeField] private bool b_canbeStopped;
     public int i_music; // To know which music is selected
     [SerializeField] private string str_music;
+    private bool selection = false;
 
 
 
@@ -76,8 +77,11 @@ public class RythmManager : MonoBehaviour
             float test = (f_totalNote - f_miss) * 100 /f_totalNote;
             txt_percent.text = test.ToString();
             go_EndScreen.SetActive(true);
-            btn_Retry.Select();
-
+            if (!selection)
+            {
+                btn_Retry.Select();
+                selection = true;
+            }
 
         }
 
@@ -116,6 +120,16 @@ public class RythmManager : MonoBehaviour
     }
 
     public void Musique3()
+    {
+
+    }
+
+    public void Retry()
+    {
+
+    }
+
+    public void Menu()
     {
 
     }
