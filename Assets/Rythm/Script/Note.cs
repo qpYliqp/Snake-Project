@@ -81,5 +81,14 @@ public class Note : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.tag == "Activator")
+        {
+            canBePressed = false;
+
+        }
+    }
+
 
 }

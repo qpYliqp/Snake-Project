@@ -57,7 +57,7 @@ public class RythmManager : MonoBehaviour
     public bool b_end = false;
     public int i_music; // To know which music is selected
     [SerializeField] private string str_music;
-    private bool selection = false;
+    [SerializeField] private bool selection = false;
 
 
 
@@ -79,12 +79,14 @@ public class RythmManager : MonoBehaviour
             float test = (f_totalNote - f_miss) * 100 /f_totalNote;
             txt_percent.text = test.ToString();
             go_EndScreen.SetActive(true);
+            
             if (!selection)
             {
                 btn_Retry.Select();
                 selection = true;
             }
             f_totalNote = 60;
+
 
         }
 
@@ -111,7 +113,7 @@ public class RythmManager : MonoBehaviour
 
     }
 
-    public void Musiqu2()
+    public void Musique2()
     {
         StartCoroutine("WaitForLaunch");
         str_music = "harvey";
@@ -126,7 +128,10 @@ public class RythmManager : MonoBehaviour
     }
     public void wait()
     {
+        b_end = false;
+ 
         StartCoroutine("WaitForLaunch");
+        selection = false;
 
     }
 
@@ -134,6 +139,13 @@ public class RythmManager : MonoBehaviour
     {   b_end = true;
         go_EndScreen.SetActive(false);
         current_beat.Rewind();
+        i_currentScore = 0;
+        i_currentMultiplier = 1;
+        f_neutral = 0;
+        f_good =     0;
+        f_great = 0;
+        f_perfect = 0;
+        f_miss = 0;
 
 
     }
