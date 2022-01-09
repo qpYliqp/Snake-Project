@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e05a17a7695ce3d4c80f728496e6a49e, type: 3}
-  m_Name: Original
+  m_Name: MultipleApples
   m_EditorClassIdentifier: 
-  _name: Original
-  _description: "Pr\xEAt(e) \xE0 affronter le mode de jeu par excellence du Snake
-    ?"
+  _name: "Pommes \xE0 gogo"
+  _description: "Tu ne seras plus jamais \xE0 court de pommes. 5 pommes te seront
+    offertes en m\xEAme temps."

@@ -96,6 +96,13 @@ public class SnakeManager : MonoBehaviour
         Snake = Instantiate(SnakePrefab);
         score = 0;
         highscore = PlayerPrefs.GetInt("Snake" + activeGamemode.name + "Highscore");
+
+        AddApple();
+
+        if (isMultipleApplesGM())
+            for (int i = 1; i < 5; i++)
+                AddApple();
+
     }
 
     // Fonction appel�e lors de la d�faite du joueur
@@ -144,5 +151,25 @@ public class SnakeManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public string GetGamemodePrefabName()
+    {
+        return activeGamemode.name;
+    }
+
+    public bool isMultipleApplesGM()
+    {
+        return GetGamemodePrefabName() == "MultipleApples";
+    }
+
+    public bool isHarmlessSnakeGM()
+    {
+        return GetGamemodePrefabName() == "HarmlessSnake";
+    }
+
+    public bool isHarmlessWallsGM()
+    {
+        return GetGamemodePrefabName() == "HarmlessWalls";
     }
 }

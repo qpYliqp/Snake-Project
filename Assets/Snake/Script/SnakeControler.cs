@@ -183,7 +183,6 @@ public class SnakeControler : MonoBehaviour
 
     public void ResetState()
     {
-        SnakeManager.GetComponent<SnakeManager>().SupprAllApple();
 
         this.direction = Vector2.right;
 
@@ -215,8 +214,6 @@ public class SnakeControler : MonoBehaviour
 
         GrowUntagged();
         GrowUntagged();
-
-        SnakeManager.GetComponent<SnakeManager>().AddApple();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -228,10 +225,19 @@ public class SnakeControler : MonoBehaviour
                 SnakeManager.GetComponent<SnakeManager>().SnakeEatApple(other.transform);
                 break;
             case "Wall-Snake":
-                Death();
+                if (!SnakeManager.GetComponent<SnakeManager>().isHarmlessWallsGM())
+                    Death();
+                else
+                {
+                    if (direction == Vector2.right || direction == Vector2.left)
+                        this.transform.position = new Vector3(-transform.position.x, transform.position.y, transform.position.z);
+                    else if (direction == Vector2.up || direction == Vector2.down)
+                        this.transform.position = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
+                }
                 break;
             case "Snake-Snake":
-                Death();
+                if (!SnakeManager.GetComponent<SnakeManager>().isHarmlessSnakeGM())
+                    Death();
                 break;
         }
     }
