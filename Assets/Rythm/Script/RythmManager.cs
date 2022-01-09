@@ -36,6 +36,7 @@ public class RythmManager : MonoBehaviour
     public GameObject go_EndScreen;
     public GameObject go_PlayingScreen;
     public GameObject go_Compteur;
+    private GameObject go_current_beat;
     public Button btn_Musique1;
     public Button btn_Musique2;
     public Button btn_Musique3;
@@ -94,9 +95,9 @@ public class RythmManager : MonoBehaviour
         {
             switch (i_music) { 
                 default: break;
-                case 1: LaunchMusic(Beat1, go_Beat1); f_totalNote = 17;f_tempo = 160 / 60;  break;
-                case 2: LaunchMusic(Beat2, go_Beat2); f_totalNote = 17; f_tempo = 124 / 60; break;
-
+                case 1: LaunchMusic(Beat1); f_totalNote = 17;f_tempo = 160 / 60;  break;
+                case 2: LaunchMusic(Beat2); f_totalNote = 17; f_tempo = 124 / 60; break;
+                                         
             }
             
         }
@@ -106,7 +107,7 @@ public class RythmManager : MonoBehaviour
     /// </début>
     public void Musique1()
     {
-
+        go_Beat1.SetActive(true);
         StartCoroutine("WaitForLaunch");
         str_music = "redbone";
         i_music = 1;
@@ -115,6 +116,8 @@ public class RythmManager : MonoBehaviour
 
     public void Musique2()
     {
+        go_Beat2.SetActive(true);
+
         StartCoroutine("WaitForLaunch");
         str_music = "harvey";
       
@@ -164,11 +167,10 @@ public class RythmManager : MonoBehaviour
     /// </fin>
    
     //Ce qui permet de sélectionner le bon scroller
-    void LaunchMusic(Scroller beat, GameObject go_beat)
+    void LaunchMusic(Scroller beat)
     {
         go_Compteur.SetActive(false);
         i_compteur = 5;
-        go_beat.SetActive(true);
         go_PlayingScreen.SetActive(true);
         current_beat = beat;
         current_beat.hasStarted = true;

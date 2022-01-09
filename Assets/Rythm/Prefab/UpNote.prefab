@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 390650039059008043}
   - component: {fileID: 4600481729842603330}
   - component: {fileID: 2139220020371407689}
+  - component: {fileID: 156348354617800608}
   m_Layer: 0
   m_Name: UpNote
   m_TagString: Untagged
@@ -114,4 +115,23 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.8
+--- !u!95 &156348354617800608
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394370085467431387}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 43a74a17e77abc246a19d7f9f5e8bddc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
