@@ -8,6 +8,7 @@ public class Yellow_Controller : MonoBehaviour
     private Animator animator;
 
     public KeyCode keyToPress;
+    public KeyCode keyToPress2;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -22,12 +23,12 @@ public class Yellow_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(keyToPress))
+        if (Input.GetKeyDown(keyToPress) || Input.GetKeyDown(keyToPress2))
         {
             animator.Play("Yellow_Animator");
             animator.speed = 3;
         }
-        if (Input.GetKeyUp(keyToPress))
+        if (Input.GetKeyUp(keyToPress) || Input.GetKeyUp(keyToPress2))
         {
             animator.Play("Yellow");
 

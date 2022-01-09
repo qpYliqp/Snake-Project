@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyToPress: 107
+  keyToPress2: 333
 --- !u!50 &2616148597987395017
 Rigidbody2D:
   serializedVersion: 4

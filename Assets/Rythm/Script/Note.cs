@@ -8,6 +8,7 @@ public class Note : MonoBehaviour
     public bool canBePressed;
     public bool b_end;
     public KeyCode keyToPress;
+    public KeyCode keyToPress2;
     void Start()
     {
         
@@ -17,7 +18,7 @@ public class Note : MonoBehaviour
     void Update()
     {
         //Détecte la précision d'appui sur la touche
-        if (Input.GetKeyDown(keyToPress)) {
+        if (Input.GetKeyDown(keyToPress) || Input.GetKeyDown(keyToPress2)) {
             if (canBePressed) {
                 gameObject.SetActive(false);
 

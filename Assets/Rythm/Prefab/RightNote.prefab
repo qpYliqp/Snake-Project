@@ -116,6 +116,7 @@ MonoBehaviour:
   canBePressed: 0
   b_end: 0
   keyToPress: 107
+  keyToPress2: 333
 --- !u!95 &4090282957335431191
 Animator:
   serializedVersion: 3

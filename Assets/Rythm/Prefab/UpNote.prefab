@@ -100,6 +100,7 @@ MonoBehaviour:
   canBePressed: 0
   b_end: 0
   keyToPress: 106
+  keyToPress2: 332
 --- !u!58 &2139220020371407689
 CircleCollider2D:
   m_ObjectHideFlags: 0
