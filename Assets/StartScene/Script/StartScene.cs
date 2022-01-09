@@ -52,6 +52,7 @@ public class StartScene : MonoBehaviour
             case 1:
                 go_ScreenPlay.SetActive(true);
                 go_ScreenSelect.SetActive(false);
+                btn_Play.Select();
                 break;
             case 2:
                 go_ScreenPlay.SetActive(false);

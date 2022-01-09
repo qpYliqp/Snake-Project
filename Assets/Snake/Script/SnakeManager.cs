@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SnakeManager : MonoBehaviour
 {
@@ -9,16 +11,37 @@ public class SnakeManager : MonoBehaviour
 
     public Transform SpawnZone;
 
+    public GameObject SnakePrefab;
+    public GameObject Snake;
+
+    public GameObject menu;
+    public Button buttonStart;
+    public Button buttonMenu;
+
+    public Gamemode[] gamemodes;
+    public Gamemode activeGamemode;
+
+    public Text GamemodeName;
+    public Text GamemodeDesc;
+
     // Start is called before the first frame update
     void Start()
     {
+        OpenMenu();
+    }
 
+    public void OpenMenu()
+    {
+        menu.SetActive(true);
+        activeGamemode = gamemodes[0];
+        OverlayGamemode(0);
+        buttonStart.Select();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void SupprAllApple()
@@ -37,5 +60,42 @@ public class SnakeManager : MonoBehaviour
 
         segInv.position = new Vector3(x, y, 0);
         segInv.parent = FoodHolder.transform;
+    }
+
+    public void SnakeEatApple(Transform apple)
+    {
+        Destroy(apple.gameObject);
+        AddApple();
+    }
+
+
+    public void StartGame()
+    {
+        menu.SetActive(false);
+        Snake = Instantiate(SnakePrefab);
+    }
+
+    public void Defeat()
+    {
+        Destroy(Snake);
+        OpenMenu();
+    }
+
+    public void SetGamemode(int gamemode)
+    {
+        activeGamemode = gamemodes[gamemode];
+        buttonStart.Select();
+    }
+
+    public void OverlayGamemode(int gamemode)
+    {
+        Gamemode game = gamemodes[gamemode];
+        GamemodeName.text = game.name;
+        GamemodeDesc.text = game._description;
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

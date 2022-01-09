@@ -39,6 +39,9 @@ public class SnakeControler : MonoBehaviour
 
     private void Start()
     {
+        SnakeManager = FindObjectOfType<SnakeManager>().gameObject;
+        parentOfPart = GameObject.Find("SnakeHolder");
+
         sauvPos = transform.position;
         sauvRot = transform.rotation;
         ResetState();
@@ -242,12 +245,16 @@ public class SnakeControler : MonoBehaviour
         if (other.tag == "Food-Snake")
         {
             Grow();
-            Destroy(other.gameObject);
-            SnakeManager.GetComponent<SnakeManager>().AddApple();
+            SnakeManager.GetComponent<SnakeManager>().SnakeEatApple(other.transform);
         }
         else if (other.tag == "Wall-Snake")
         {
-            ResetState();
+            //ResetState();
+            for (int i = 0; i < parentOfPart.transform.childCount; i++)
+            {
+                Destroy(parentOfPart.transform.GetChild(i).gameObject);
+            }
+            SnakeManager.GetComponent<SnakeManager>().Defeat();
         }
     }
 }
