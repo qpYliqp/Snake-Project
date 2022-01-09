@@ -1,18 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
 public class SnakeControler : MonoBehaviour
 {
-    private List<Transform> AllParts = new List<Transform>();
-    public Transform HeadPrefab;
+    [Header("Prefabs")]
     public Transform BodyPrefab;
     public Transform TailPrefab;
-    public Vector2 direction = Vector2.right;
-    public int initialSize = 3;
 
-    public GameObject parentOfPart;
+    [Header("Snake")]
+    [SerializeField]
+    private List<Transform> AllParts = new List<Transform>();
+    [SerializeField]
+    private Vector2 direction = Vector2.right;
+    [SerializeField]
+    private GameObject parentOfPart;
+    public float speed = 10.0f;
+    [SerializeField]
+    private float timerBeforeTurn;
 
+    [Header("Touches / Inputs")]
     public KeyCode keyUp;
     public KeyCode keyRight;
     public KeyCode keyDown;
@@ -23,27 +29,18 @@ public class SnakeControler : MonoBehaviour
     public KeyCode keyDownArrow;
     public KeyCode keyLeftArrow;
 
-    public float speed = 10.0f;
+    [Header("Game Manager")]
+    [SerializeField]
+    private GameObject SnakeManager;
 
-    public float sizeOfParts = 3.0f;
-
-    private Vector3 sauvPos;
-    private Quaternion sauvRot;
-
-    private float X;
-    private float Y;
-
-    public float timerBeforeTurn;
-
-    public GameObject SnakeManager;
+    [SerializeField]
+    private int nombreDuShlagh = 4;
 
     private void Start()
     {
         SnakeManager = FindObjectOfType<SnakeManager>().gameObject;
         parentOfPart = GameObject.Find("SnakeHolder");
 
-        sauvPos = transform.position;
-        sauvRot = transform.rotation;
         ResetState();
 
         ResetTimerBeforeTurn();
@@ -58,7 +55,6 @@ public class SnakeControler : MonoBehaviour
     {
         if (timerBeforeTurn <= 0)
         {
-            // Only allow turning up or down while moving in the x-axis
             if (this.direction.x != 0f)
             {
                 if (Input.GetKeyDown(keyUp) || Input.GetKeyDown(keyUpArrow))
@@ -90,7 +86,6 @@ public class SnakeControler : MonoBehaviour
                     ResetTimerBeforeTurn();
                 }
             }
-            // Only allow turning left or right while moving in the y-axis
             else if (this.direction.y != 0f)
             {
                 if (Input.GetKeyDown(keyRight) || Input.GetKeyDown(keyRightArrow))
@@ -132,70 +127,58 @@ public class SnakeControler : MonoBehaviour
         {
             Grow();
         }
-
-        
     }
 
     private void FixedUpdate()
     {
-        // Set each segment's position to be the same as the one it follows. We
-        // must do this in reverse order so the position is set to the previous
-        // position, otherwise they will all be stacked on top of each other.
         for (int i = AllParts.Count - 1; i > 0; i--)
         {
             AllParts[i].position = AllParts[i - 1].position;
         }
-
-        // Move the snake in the direction it is facing
-        // Round the values to ensure it aligns to the grid
-        // float x = Mathf.Round(this.transform.position.x) + this.direction.x / 100.0f * speed;
-        // float y = Mathf.Round(this.transform.position.y) + this.direction.y / 100.0f * speed;
         float x = this.transform.position.x + this.direction.x / 100.0f * speed;
         float y = this.transform.position.y + this.direction.y / 100.0f * speed;
-        //X = X + this.direction.x / 100.0f * speed;
-        //Y = Y + this.direction.y / 100.0f * speed;
 
         this.transform.position = new Vector2(x, y);
     }
 
     public void Grow()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < nombreDuShlagh; i++)
         {
             Transform segInv = Instantiate(this.BodyPrefab);
-            segInv.position = AllParts[AllParts.Count - 5].position;
+            segInv.position = AllParts[AllParts.Count - nombreDuShlagh].position;
             segInv.parent = parentOfPart.transform;
             segInv.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
-            AllParts.Insert(AllParts.Count - 5, segInv);
+            AllParts.Insert(AllParts.Count - nombreDuShlagh, segInv);
         }
 
         Transform segment = Instantiate(this.BodyPrefab);
-        segment.position = AllParts[AllParts.Count - 5].position;
+        segment.position = AllParts[AllParts.Count - nombreDuShlagh].position;
         segment.parent = parentOfPart.transform;
 
-        AllParts.Insert(AllParts.Count - 5, segment);
+        AllParts.Insert(AllParts.Count - nombreDuShlagh, segment);
     }
 
     public void GrowUntagged()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < nombreDuShlagh; i++)
         {
             Transform segInv = Instantiate(this.BodyPrefab);
-            segInv.position = AllParts[AllParts.Count - 5].position;
+            segInv.position = AllParts[AllParts.Count - nombreDuShlagh].position;
             segInv.parent = parentOfPart.transform;
             segInv.gameObject.GetComponent<SpriteRenderer>().enabled = false;
             segInv.tag = "Untagged";
 
-            AllParts.Insert(AllParts.Count - 5, segInv);
+            AllParts.Insert(AllParts.Count - nombreDuShlagh, segInv);
         }
 
         Transform segment = Instantiate(this.BodyPrefab);
-        segment.position = AllParts[AllParts.Count - 5].position;
+        segment.position = AllParts[AllParts.Count - nombreDuShlagh].position;
         segment.parent = parentOfPart.transform;
         segment.tag = "Untagged";
 
-        AllParts.Insert(AllParts.Count - 5, segment);
+        AllParts.Insert(AllParts.Count - nombreDuShlagh, segment);
     }
 
     public void ResetState()
@@ -203,23 +186,19 @@ public class SnakeControler : MonoBehaviour
         SnakeManager.GetComponent<SnakeManager>().SupprAllApple();
 
         this.direction = Vector2.right;
-        transform.position = sauvPos;
-        transform.rotation = sauvRot;
 
-        // Start at 1 to skip destroying the head
         for (int i = 1; i < AllParts.Count; i++)
         {
             Destroy(AllParts[i].gameObject);
         }
 
-        // Clear the list but add back this as the head
         AllParts.Clear();
         AllParts.Add(this.transform);
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < nombreDuShlagh - 1; i++)
         {
             Transform tailInv = Instantiate(this.TailPrefab);
-            tailInv.position = this.transform.position;// + new Vector3(-direction.x * sizeOfParts, -direction.y * sizeOfParts, parentOfPart.transform.position.z);
+            tailInv.position = this.transform.position;
             tailInv.parent = parentOfPart.transform;
             tailInv.gameObject.GetComponent<SpriteRenderer>().enabled = false;
             tailInv.tag = "Untagged";
@@ -228,7 +207,7 @@ public class SnakeControler : MonoBehaviour
         }
 
         Transform tail = Instantiate(this.TailPrefab);
-        tail.position = this.transform.position;// + new Vector3(-direction.x * sizeOfParts, -direction.y * sizeOfParts, parentOfPart.transform.position.z);
+        tail.position = this.transform.position;
         tail.parent = parentOfPart.transform;
         tail.tag = "Untagged";
 
@@ -242,19 +221,27 @@ public class SnakeControler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Food-Snake")
+        switch (other.tag)
         {
-            Grow();
-            SnakeManager.GetComponent<SnakeManager>().SnakeEatApple(other.transform);
+            case "Food-Snake":
+                Grow();
+                SnakeManager.GetComponent<SnakeManager>().SnakeEatApple(other.transform);
+                break;
+            case "Wall-Snake":
+                Death();
+                break;
+            case "Snake-Snake":
+                Death();
+                break;
         }
-        else if (other.tag == "Wall-Snake")
+    }
+
+    public void Death()
+    {
+        for (int i = 0; i < parentOfPart.transform.childCount; i++)
         {
-            //ResetState();
-            for (int i = 0; i < parentOfPart.transform.childCount; i++)
-            {
-                Destroy(parentOfPart.transform.GetChild(i).gameObject);
-            }
-            SnakeManager.GetComponent<SnakeManager>().Defeat();
+            Destroy(parentOfPart.transform.GetChild(i).gameObject);
         }
+        SnakeManager.GetComponent<SnakeManager>().Defeat();
     }
 }
