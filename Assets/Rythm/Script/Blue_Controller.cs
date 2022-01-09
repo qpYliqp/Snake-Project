@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonController : MonoBehaviour
+public class Blue_Controller : MonoBehaviour
 {
 
-    public Animator animator;
+    private Animator animator;
 
     public KeyCode keyToPress;
     void Start()
     {
-        animator = GetComponent<Animator>();  
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -18,12 +18,13 @@ public class ButtonController : MonoBehaviour
     {
         if (Input.GetKeyDown(keyToPress))
         {
-          animator.Play("color");
+            animator.Play("Blue_Animator");
         }
         if (Input.GetKeyUp(keyToPress))
         {
-           animator.Play("color_animation");
+            animator.Play("Blue");
+
         }
-        
+
     }
 }
