@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5319761882464636267}
   m_Layer: 0
   m_Name: snakeBodyTransform
-  m_TagString: Wall-Snake
+  m_TagString: Snake-Snake
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,5 +129,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 1.6, y: 1.6}
   m_EdgeRadius: 0
