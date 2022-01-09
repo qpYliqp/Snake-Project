@@ -52,7 +52,7 @@ MonoBehaviour:
   AllParts: []
   direction: {x: 1, y: 0}
   parentOfPart: {fileID: 0}
-  speed: 10
+  speed: 3
   timerBeforeTurn: 0
   keyUp: 332
   keyRight: 333
