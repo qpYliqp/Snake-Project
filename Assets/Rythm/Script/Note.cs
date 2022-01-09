@@ -16,7 +16,7 @@ public class Note : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Détecte la précision d'appui sur la touche
         if (Input.GetKeyDown(keyToPress)) {
             if (canBePressed) {
                 gameObject.SetActive(false);
@@ -44,9 +44,7 @@ public class Note : MonoBehaviour
                     RythmManager.instance.NoteHit("perfect");
                     Debug.Log("perfect");
 
-                }
-                //Destroy(this);
-                //gameObject.SetActive(false);
+                }   
             }
 
         }
@@ -66,8 +64,6 @@ public class Note : MonoBehaviour
                 //Il y a un trigger " Missed " juste en dessous du Trigger " Activator " qui siginifie qu'il est trop tard pour avoir des points
                 canBePressed = false;
                 gameObject.SetActive(false);
-                //Destroy(this);
-                //Destroy(gameObject);
                 gameObject.SetActive(false);
                 RythmManager.instance.NoteMissed();
 
