@@ -43,6 +43,7 @@ public class SnakeManager : MonoBehaviour
         score = 0;
         FoodHolder = GameObject.Find("FoodHolder");
         SpawnZone = GameObject.Find("SpawnZone").transform;
+        
 
         SetGamemode(0);
         OpenMenu();
@@ -92,6 +93,8 @@ public class SnakeManager : MonoBehaviour
     // Lance le jeu avec ce qu'il faut
     public void StartGame()
     {
+        SoundManager.instance.PlayAMusic("snake");
+
         menu.SetActive(false);
         Snake = Instantiate(SnakePrefab);
         score = 0;
@@ -150,6 +153,7 @@ public class SnakeManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        SoundManager.instance.StopAMusic("snake");
         SceneManager.LoadScene(0);
     }
 

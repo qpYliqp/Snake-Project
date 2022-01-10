@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class RythmManager : MonoBehaviour
 {
@@ -78,7 +79,7 @@ public class RythmManager : MonoBehaviour
             current_beat.hasStarted = false;
             txt_score.text = i_currentScore.ToString(); txt_neutral.text = f_neutral.ToString(); txt_good.text = f_good.ToString(); txt_great.text = f_great.ToString();
             txt_perfect.text = f_perfect.ToString(); txt_miss.text = f_miss.ToString();
-            float test = (f_totalNote - f_miss) * 100 /f_save_total;
+            float test = (f_save_total - f_miss) * 100 /f_save_total;
             txt_percent.text = test.ToString();
             go_EndScreen.SetActive(true);
             
@@ -154,14 +155,16 @@ public class RythmManager : MonoBehaviour
 
     }
 
-    private void Menu()
+    public void GoMenu()
     {
-
+        SceneManager.LoadScene(0);
     }
 
-    private void ResetRythm()
+    
+
+    public void ResetRythm()
     {
-        i_compteur = 5;
+        SceneManager.LoadScene(2);
     }
     /// </Liste de fonctions appelée quand on clique sur un boutton>
     /// 
