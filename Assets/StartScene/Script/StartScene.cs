@@ -63,15 +63,11 @@ public class StartScene : MonoBehaviour
 
     public void Rythm()
     {
-        SoundManager.instance.StopAMusic("menu");
-
         Scenes.Instance.Load(2);
     }
 
     public void Snake()
     {
-        SoundManager.instance.StopAMusic("menu");
-
         Scenes.Instance.Load(1);
     }
 
@@ -91,7 +87,6 @@ public class StartScene : MonoBehaviour
     void Start()
     {
         btn_Play.Select();
-        SoundManager.instance.PlayAMusic("menu");
         
     }
 
